@@ -1,0 +1,38 @@
+using UnityEngine;
+
+public class playerController : MonoBehaviour
+{
+    [SerializeField] CharacterController controller;
+
+    [Range(1, 10)][SerializeField] int HP;
+    [Range(10, 20)][SerializeField] int speed;
+    [Range(5, 10)][SerializeField] int jumpSpeed;
+    [SerializeField] int maxJumps;
+    [SerializeField] int sprintMult;
+    [SerializeField] float fireRate;
+    [SerializeField] int gravity;
+
+    int HPOriginal;
+
+    Vector3 moveDirection;
+    Vector3 playerVelocity;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        HPOriginal = HP;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        movement();
+    }
+
+    void movement()
+    {
+        moveDirection = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
+        controller.Move(moveDirection.normalized * speed * Time.deltaTime);
+
+    }
+}

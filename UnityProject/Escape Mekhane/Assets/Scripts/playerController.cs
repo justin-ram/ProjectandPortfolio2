@@ -13,6 +13,7 @@ public class playerController : MonoBehaviour
     [SerializeField] int gravity;
 
     int HPOriginal;
+    int jumpCount;
 
     Vector3 moveDirection;
     Vector3 playerVelocity;
@@ -31,8 +32,27 @@ public class playerController : MonoBehaviour
 
     void movement()
     {
+        if (controller.isGrounded)
+        {
+            jumpCount = 0;
+            playerVelocity.y = 0;
+        }
+
         moveDirection = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
         controller.Move(moveDirection.normalized * speed * Time.deltaTime);
+        
+       
+        jump();
+        controller.Move(playerVelocity * Time.deltaTime);
+        playerVelocity.y -= gravity * Time.deltaTime;
+    }
 
+    void jump()
+    {
+        if(Input.GetButtonDown("Jump") && jumpCount < maxJumps)
+        {
+            jumpCount++;
+            playerVelocity.y = jumpSpeed;
+        }
     }
 }

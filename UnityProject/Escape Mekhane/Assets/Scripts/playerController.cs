@@ -5,7 +5,7 @@ public class playerController : MonoBehaviour
     [SerializeField] CharacterController controller;
 
     [Range(1, 10)][SerializeField] int HP;
-    [Range(10, 20)][SerializeField] int speed;
+    [Range(5, 10)][SerializeField] int speed;
     [Range(5, 10)][SerializeField] int jumpSpeed;
     [SerializeField] int maxJumps;
     [SerializeField] int sprintMult;
@@ -28,6 +28,7 @@ public class playerController : MonoBehaviour
     void Update()
     {
         movement();
+        sprint();
     }
 
     void movement()
@@ -47,6 +48,17 @@ public class playerController : MonoBehaviour
         playerVelocity.y -= gravity * Time.deltaTime;
     }
 
+    void sprint()
+    {
+        if(Input.GetButtonDown("Sprint"))
+        {
+            speed *= sprintMult;
+        }
+        else if(Input.GetButtonUp("Sprint"))
+        {
+            speed /= sprintMult;
+        }
+    }
     void jump()
     {
         if(Input.GetButtonDown("Jump") && jumpCount < maxJumps)

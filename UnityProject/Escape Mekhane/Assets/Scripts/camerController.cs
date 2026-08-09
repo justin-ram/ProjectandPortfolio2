@@ -17,9 +17,12 @@ public class camerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(gameManager.instance.isPaused == false)
+        if(gameManager.instance != null)
         {
-            rotateCamera();
+            if (gameManager.instance.isPaused == false)
+            {
+                rotateCamera();
+            }
         }
     }
 

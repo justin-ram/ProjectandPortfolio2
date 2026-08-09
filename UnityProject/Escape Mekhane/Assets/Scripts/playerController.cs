@@ -11,7 +11,8 @@ public class playerController : MonoBehaviour
     [SerializeField] int sprintMult;
     [SerializeField] float fireRate;
     [SerializeField] int gravity;
-
+    [SerializeField] int dashCoolDownTimer;
+    [SerializeField] int dashSpeed;
     int HPOriginal;
     int jumpCount;
 
@@ -65,6 +66,14 @@ public class playerController : MonoBehaviour
         {
             jumpCount++;
             playerVelocity.y = jumpSpeed;
+        }
+    }
+
+    void dash()
+    {
+        if(Input.GetButtonDown("Dash") && dashCoolDownTimer <= 0)
+        {
+
         }
     }
 }

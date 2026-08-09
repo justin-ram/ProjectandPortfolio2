@@ -52,11 +52,11 @@ MonoBehaviour:
   controller: {fileID: 2627892245434617466}
   HP: 10
   speed: 10
-  jumpSpeed: 5
-  maxJumps: 1
+  jumpSpeed: 10
+  maxJumps: 2
   sprintMult: 2
   fireRate: 0
-  gravity: 35
+  gravity: 15
 --- !u!143 &2627892245434617466
 CharacterController:
   m_ObjectHideFlags: 0
@@ -168,6 +168,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6526922289627313583}
   - component: {fileID: 5822911713307390242}
+  - component: {fileID: 4635681797412915465}
   - component: {fileID: 6773564999299048152}
   - component: {fileID: 3981489617078869149}
   m_Layer: 0
@@ -243,6 +244,21 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &4635681797412915465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8353294174341659829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96e8aec731795d64291c7d91c8c15b23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camSens: 10
+  lockVertMin: -90
+  lockVertMax: 90
 --- !u!81 &6773564999299048152
 AudioListener:
   m_ObjectHideFlags: 0

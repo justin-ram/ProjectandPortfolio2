@@ -4,9 +4,8 @@
     "\\UnityProject",
     "\\UnityProject\\Escape Mekhane",
     "\\UnityProject\\Escape Mekhane\\Assets",
-    "\\UnityProject\\Escape Mekhane\\Assets\\Scripts",
-    "\\UnityProject\\Escape Mekhane\\Library\\APIUpdater"
+    "\\UnityProject\\Escape Mekhane\\Assets\\Scripts"
   ],
-  "SelectedNode": "\\UnityProject\\Escape Mekhane\\Assets\\Scripts\\playerController.cs",
+  "SelectedNode": "\\UnityProject\\Escape Mekhane\\Assets\\Scripts\\gameManager.cs",
   "PreviewInSolutionExplorer": false
 }

@@ -1,3 +1,4 @@
+using UnityEditor.Build.Content;
 using UnityEngine;
 
 public class camerController : MonoBehaviour
@@ -16,7 +17,10 @@ public class camerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rotateCamera();
+        if(gameManager.instance.isPaused == false)
+        {
+            rotateCamera();
+        }
     }
 
     void rotateCamera()

@@ -11,10 +11,12 @@ public class playerController : MonoBehaviour
     [SerializeField] int sprintMult;
     [SerializeField] float fireRate;
     [SerializeField] int gravity;
-    [SerializeField] int dashCoolDownTimer;
+    [SerializeField] float dashCoolDownTime;
+
     [SerializeField] int dashSpeed;
     int HPOriginal;
     int jumpCount;
+    float dashTimer;
 
     Vector3 moveDirection;
     Vector3 playerVelocity;
@@ -30,6 +32,10 @@ public class playerController : MonoBehaviour
     {
         movement();
         sprint();
+        if (dashTimer > 0)
+        {
+            dashTimer -= Time.deltaTime;
+        }
     }
 
     void movement()
@@ -47,6 +53,9 @@ public class playerController : MonoBehaviour
         jump();
         controller.Move(playerVelocity * Time.deltaTime);
         playerVelocity.y -= gravity * Time.deltaTime;
+
+        dash();
+        controller.Move(playerVelocity * Time.deltaTime);
     }
 
     void sprint()
@@ -71,9 +80,10 @@ public class playerController : MonoBehaviour
 
     void dash()
     {
-        if(Input.GetButtonDown("Dash") && dashCoolDownTimer <= 0)
+        if(Input.GetButtonDown("Dash") && dashCoolDownTime <= 0)
         {
-
+            playerVelocity.x = dashSpeed;
+            dashTimer = dashCoolDownTime;
         }
     }
 }

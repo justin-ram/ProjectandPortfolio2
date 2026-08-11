@@ -9,6 +9,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
+    [SerializeField] GameObject mainMenu;
 
     public bool isPaused;
     public GameObject player;
@@ -17,20 +18,32 @@ public class gameManager : MonoBehaviour
     public Image playerDashBar;
 
     float timeScaleOrig;
+    bool isPlayer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         instance = this;
         player = GameObject.FindWithTag("Player");
-        playerScript = player.GetComponent<playerController>();
+        if (player != null)
+        {
+            playerScript = player.GetComponent<playerController>();
+            isPlayer = true;
+        }
+        else
+        {
+            isPlayer = false;
+            playerHPBar.transform.parent.gameObject.SetActive(false);
+            playerDashBar.transform.parent.gameObject.SetActive(false);
+            mainMenu.SetActive(false);
+        }
         timeScaleOrig = Time.timeScale;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Cancel"))
+        if (Input.GetButtonDown("Cancel") && isPlayer)
         {
             if (menuActive == null)
             {

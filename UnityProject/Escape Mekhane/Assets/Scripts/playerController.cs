@@ -26,6 +26,8 @@ public class playerController : MonoBehaviour, IDamage
     //time before velocity is set to 0.
     float timeDashLasts;
     [SerializeField] float timeDashLastsTimer;
+    [SerializeField] int interactDist;
+    
 
     Vector3 moveDirection;
     Vector3 playerVelocity;
@@ -48,6 +50,7 @@ public class playerController : MonoBehaviour, IDamage
     void movement()
     {
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDistance, Color.red);
+        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * interactDist, Color.blue);
         shootTimer += Time.deltaTime;
         if (controller.isGrounded)
         {
@@ -68,6 +71,10 @@ public class playerController : MonoBehaviour, IDamage
             shoot();
         }
         
+        if(Input.GetButtonDown("Fire2"))
+        {
+            interactWith();
+        }
     }
 
     void sprint()
@@ -134,9 +141,30 @@ public class playerController : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
-        if(HP <= 0)
+        if (HP <= 0)
         {
             //You lose. Pauses game and put loss screen.
         }
     }
+
+    void updatePlayerHPUI()
+    {
+
+    }
+
+    void interactWith()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, interactDist, ~ignoreLayer))
+        {
+            Debug.Log(hit.collider.name);
+            IInteract interact = hit.collider.GetComponent<IInteract>();
+            if (interact != null)
+            {
+                interact.Interact();
+            }
+        }
+    }
+
 }

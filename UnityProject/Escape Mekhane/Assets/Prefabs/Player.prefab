@@ -59,11 +59,12 @@ MonoBehaviour:
   sprintMult: 2
   shootFireRate: 1
   shootDamage: 1
-  shootDistance: 10
+  shootDistance: 100
   gravity: 15
   dashCoolDownTime: 3
   dashSpeed: 20
   timeDashLastsTimer: 0.8
+  interactDist: 10
 --- !u!143 &2627892245434617466
 CharacterController:
   m_ObjectHideFlags: 0

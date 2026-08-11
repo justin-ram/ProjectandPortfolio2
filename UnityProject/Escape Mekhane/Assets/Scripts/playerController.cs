@@ -11,15 +11,21 @@ public class playerController : MonoBehaviour
     [SerializeField] int sprintMult;
     [SerializeField] float fireRate;
     [SerializeField] int gravity;
+    //how long before you can press dash again
     [SerializeField] float dashCoolDownTime;
-
     [SerializeField] int dashSpeed;
     int HPOriginal;
     int jumpCount;
+    //timer for dash cool down
     float dashTimer;
+
+    //time before velocity is set to 0.
+    float timeDashLasts;
+    [SerializeField] float timeDashLastsTimer;
 
     Vector3 moveDirection;
     Vector3 playerVelocity;
+    Vector3 dashDirection;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,10 +38,7 @@ public class playerController : MonoBehaviour
     {
         movement();
         sprint();
-        if (dashTimer > 0)
-        {
-            dashTimer -= Time.deltaTime;
-        }
+        dash();
     }
 
     void movement()
@@ -54,8 +57,8 @@ public class playerController : MonoBehaviour
         controller.Move(playerVelocity * Time.deltaTime);
         playerVelocity.y -= gravity * Time.deltaTime;
 
-        dash();
-        controller.Move(playerVelocity * Time.deltaTime);
+       
+        
     }
 
     void sprint()
@@ -80,10 +83,25 @@ public class playerController : MonoBehaviour
 
     void dash()
     {
-        if(Input.GetButtonDown("Dash") && dashCoolDownTime <= 0)
+        if (dashTimer > 0)
         {
-            playerVelocity.x = dashSpeed;
+            dashTimer -= Time.deltaTime;
+        }
+        if (timeDashLasts > 0)
+        {
+            timeDashLasts -= Time.deltaTime;
+            controller.Move(dashDirection.normalized * dashSpeed * Time.deltaTime);
+        }
+        if (timeDashLasts <= 0)
+        {
+            dashTimer = 0;
+            playerVelocity.x = 0;
+        }
+        if(Input.GetButtonDown("Dash") && dashTimer <= 0)
+        {
+            dashDirection = transform.forward;
             dashTimer = dashCoolDownTime;
+            timeDashLasts = timeDashLastsTimer;
         }
     }
 }

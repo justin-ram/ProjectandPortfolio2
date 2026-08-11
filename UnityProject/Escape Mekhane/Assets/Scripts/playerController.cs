@@ -18,7 +18,7 @@ public class playerController : MonoBehaviour, IDamage
     //how long before you can press dash again
     [SerializeField] float dashCoolDownTime;
     [SerializeField] int dashSpeed;
-    int HPOriginal;
+    [SerializeField] int HPOriginal;
     int jumpCount;
     //timer for dash cool down
     float dashTimer;
@@ -37,6 +37,7 @@ public class playerController : MonoBehaviour, IDamage
     void Start()
     {
         HPOriginal = HP;
+        updatePlayerUI();
     }
 
     // Update is called once per frame
@@ -141,15 +142,16 @@ public class playerController : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
+        updatePlayerUI();
         if (HP <= 0)
         {
             //You lose. Pauses game and put loss screen.
         }
     }
 
-    void updatePlayerHPUI()
+    void updatePlayerUI()
     {
-
+        gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOriginal;
     }
 
     void interactWith()

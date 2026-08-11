@@ -1,5 +1,5 @@
 using UnityEngine;
-//using UnityEngine.UI;
+using UnityEngine.UI;
 
 public class gameManager : MonoBehaviour
 {
@@ -13,6 +13,8 @@ public class gameManager : MonoBehaviour
     public bool isPaused;
     public GameObject player;
     public playerController playerScript;
+    public Image playerHPBar;
+    public Image playerDashBar;
 
     float timeScaleOrig;
 

@@ -27,7 +27,11 @@ public class playerController : MonoBehaviour, IDamage
     float timeDashLasts;
     [SerializeField] float timeDashLastsTimer;
     [SerializeField] int interactDist;
-    
+    float healCoolDown;
+    [SerializeField] int healAmount;
+    [SerializeField] float healCoolDownTimer;
+    float healDuration;
+    [SerializeField] float healDurationTimer;
 
     Vector3 moveDirection;
     Vector3 playerVelocity;
@@ -46,6 +50,7 @@ public class playerController : MonoBehaviour, IDamage
         movement();
         sprint();
         dash();
+        HealHp();
     }
 
     void movement()
@@ -61,18 +66,18 @@ public class playerController : MonoBehaviour, IDamage
 
         moveDirection = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
         controller.Move(moveDirection.normalized * speed * Time.deltaTime);
-        
-       
+
+
         jump();
         controller.Move(playerVelocity * Time.deltaTime);
         playerVelocity.y -= gravity * Time.deltaTime;
 
-        if(Input.GetButton("Fire1") && shootTimer > shootFireRate)
+        if (Input.GetButton("Fire1") && shootTimer > shootFireRate)
         {
             shoot();
         }
-        
-        if(Input.GetButtonDown("Fire2"))
+
+        if (Input.GetButtonDown("Fire2"))
         {
             interactWith();
         }
@@ -80,18 +85,18 @@ public class playerController : MonoBehaviour, IDamage
 
     void sprint()
     {
-        if(Input.GetButtonDown("Sprint"))
+        if (Input.GetButtonDown("Sprint"))
         {
             speed *= sprintMult;
         }
-        else if(Input.GetButtonUp("Sprint"))
+        else if (Input.GetButtonUp("Sprint"))
         {
             speed /= sprintMult;
         }
     }
     void jump()
     {
-        if(Input.GetButtonDown("Jump") && jumpCount < maxJumps)
+        if (Input.GetButtonDown("Jump") && jumpCount < maxJumps)
         {
             jumpCount++;
             playerVelocity.y = jumpSpeed;
@@ -114,7 +119,7 @@ public class playerController : MonoBehaviour, IDamage
             dashTimer = 0;
             playerVelocity.x = 0;
         }
-        if(Input.GetButtonDown("Dash") && dashTimer <= 0)
+        if (Input.GetButtonDown("Dash") && dashTimer <= 0)
         {
             dashDirection = transform.forward;
             dashTimer = dashCoolDownTime;
@@ -142,10 +147,32 @@ public class playerController : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
+        healCoolDown = healCoolDownTimer;
         updatePlayerUI();
         if (HP <= 0)
         {
             //You lose. Pauses game and put loss screen.
+        }
+    }
+
+    void HealHp()
+    {
+        if (healCoolDown > 0)
+        {
+            healCoolDown -= Time.deltaTime;
+        }
+        if (healDuration > 0)
+        {
+            healDuration -= Time.deltaTime;
+        }
+        if (healCoolDown <= 0 && HP < HPOriginal)
+        {
+            if (healDuration <= 0)
+            {
+                HP += healAmount;
+                healDuration = healCoolDownTimer;
+                updatePlayerUI();
+            }
         }
     }
 
@@ -154,6 +181,10 @@ public class playerController : MonoBehaviour, IDamage
         gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOriginal;
     }
 
+    void flashDamage()
+    {
+
+    }
     void interactWith()
     {
         RaycastHit hit;

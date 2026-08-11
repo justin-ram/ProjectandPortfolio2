@@ -13,8 +13,7 @@ GameObject:
   - component: {fileID: 2627892245434617466}
   - component: {fileID: 5349826850476769274}
   - component: {fileID: 2336842638056857988}
-  - component: {fileID: 3522862249893604612}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -50,12 +49,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 2627892245434617466}
+  ignoreLayer:
+    serializedVersion: 2
+    m_Bits: 0
   HP: 10
   speed: 10
   jumpSpeed: 10
   maxJumps: 2
   sprintMult: 2
-  fireRate: 0
+  shootFireRate: 1
+  shootDamage: 1
+  shootDistance: 10
   gravity: 15
   dashCoolDownTime: 3
   dashSpeed: 20
@@ -138,29 +142,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &3522862249893604612
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6687765142510852671}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8353294174341659829
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,7 +157,7 @@ GameObject:
   - component: {fileID: 3981489617078869149}
   m_Layer: 0
   m_Name: Main Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

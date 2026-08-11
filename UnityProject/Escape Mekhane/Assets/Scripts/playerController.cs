@@ -1,15 +1,19 @@
 using UnityEngine;
+using System.Collections;
 
 public class playerController : MonoBehaviour, IDamage
 {
     [SerializeField] CharacterController controller;
+    [SerializeField] LayerMask ignoreLayer;
 
     [Range(1, 10)][SerializeField] int HP;
     [Range(5, 10)][SerializeField] int speed;
     [Range(5, 10)][SerializeField] int jumpSpeed;
     [SerializeField] int maxJumps;
     [SerializeField] int sprintMult;
-    [SerializeField] float fireRate;
+    [SerializeField] int shootFireRate;
+    [SerializeField] int shootDamage;
+    [SerializeField] int shootDistance;
     [SerializeField] int gravity;
     //how long before you can press dash again
     [SerializeField] float dashCoolDownTime;
@@ -18,7 +22,7 @@ public class playerController : MonoBehaviour, IDamage
     int jumpCount;
     //timer for dash cool down
     float dashTimer;
-
+    float shootTimer;
     //time before velocity is set to 0.
     float timeDashLasts;
     [SerializeField] float timeDashLastsTimer;
@@ -43,6 +47,8 @@ public class playerController : MonoBehaviour, IDamage
 
     void movement()
     {
+        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDistance, Color.red);
+        shootTimer += Time.deltaTime;
         if (controller.isGrounded)
         {
             jumpCount = 0;
@@ -57,7 +63,10 @@ public class playerController : MonoBehaviour, IDamage
         controller.Move(playerVelocity * Time.deltaTime);
         playerVelocity.y -= gravity * Time.deltaTime;
 
-       
+        if(Input.GetButton("Fire1") && shootTimer > shootFireRate)
+        {
+            shoot();
+        }
         
     }
 
@@ -102,6 +111,23 @@ public class playerController : MonoBehaviour, IDamage
             dashDirection = transform.forward;
             dashTimer = dashCoolDownTime;
             timeDashLasts = timeDashLastsTimer;
+        }
+    }
+
+    void shoot()
+    {
+        shootTimer = 0;
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDistance, ~ignoreLayer))
+        {
+            Debug.Log(hit.collider.name);
+            IDamage dmg = hit.collider.GetComponent<IDamage>();
+            if (dmg != null)
+            {
+                dmg.takeDamage(shootDamage);
+            }
         }
     }
 

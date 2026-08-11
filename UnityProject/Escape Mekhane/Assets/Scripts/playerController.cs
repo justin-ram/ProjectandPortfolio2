@@ -18,7 +18,7 @@ public class playerController : MonoBehaviour, IDamage
     //how long before you can press dash again
     [SerializeField] float dashCoolDownTime;
     [SerializeField] int dashSpeed;
-    [SerializeField] int HPOriginal;
+    int HPOriginal;
     int jumpCount;
     //timer for dash cool down
     float dashTimer;

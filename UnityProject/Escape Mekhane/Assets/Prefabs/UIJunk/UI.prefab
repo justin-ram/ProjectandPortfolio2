@@ -541,6 +541,8 @@ MonoBehaviour:
   isPaused: 0
   player: {fileID: 0}
   playerScript: {fileID: 0}
+  playerHPBar: {fileID: 6876968101523920902}
+  playerDashBar: {fileID: 0}
 --- !u!1 &5226739267262157624
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class playerController : MonoBehaviour
+public class playerController : MonoBehaviour, IDamage
 {
     [SerializeField] CharacterController controller;
 
@@ -102,6 +102,15 @@ public class playerController : MonoBehaviour
             dashDirection = transform.forward;
             dashTimer = dashCoolDownTime;
             timeDashLasts = timeDashLastsTimer;
+        }
+    }
+
+    public void takeDamage(int amount)
+    {
+        HP -= amount;
+        if(HP <= 0)
+        {
+            //You lose. Pauses game and put loss screen.
         }
     }
 }

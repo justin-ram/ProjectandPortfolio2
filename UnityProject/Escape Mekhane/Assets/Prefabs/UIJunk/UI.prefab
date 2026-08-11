@@ -1041,8 +1041,8 @@ MonoBehaviour:
   isPaused: 0
   player: {fileID: 0}
   playerScript: {fileID: 0}
-  playerHPBar: {fileID: 2540296906521763696}
-  playerDashBar: {fileID: 8826749854276761264}
+  playerHPBar: {fileID: 6876968101523920902}
+  playerDashBar: {fileID: 7495423622288296406}
 --- !u!1 &5226739267262157624
 GameObject:
   m_ObjectHideFlags: 0
@@ -1605,8 +1605,8 @@ RectTransform:
   - {fileID: 3375335614917357391}
   - {fileID: 3189927858225613075}
   - {fileID: 5002100268187012032}
-  - {fileID: 1576842065267030392}
   - {fileID: 8834021564007115525}
+  - {fileID: 1576842065267030392}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

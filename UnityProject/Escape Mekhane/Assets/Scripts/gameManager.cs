@@ -28,14 +28,16 @@ public class gameManager : MonoBehaviour
         if (player != null)
         {
             playerScript = player.GetComponent<playerController>();
+            mainMenu.SetActive(false);
             isPlayer = true;
         }
         else
         {
             isPlayer = false;
+            menuActive = mainMenu;
+            menuActive.SetActive(true);
             playerHPBar.transform.parent.gameObject.SetActive(false);
             playerDashBar.transform.parent.gameObject.SetActive(false);
-            mainMenu.SetActive(false);
         }
         timeScaleOrig = Time.timeScale;
     }

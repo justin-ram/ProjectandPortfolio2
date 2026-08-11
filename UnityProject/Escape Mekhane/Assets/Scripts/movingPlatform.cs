@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class movingPlatform : MonoBehaviour
 {
@@ -22,6 +23,21 @@ public class movingPlatform : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            other.gameObject.transform.parent = platform.transform;
+        }
+    }
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            other.gameObject.transform.parent = null;
+        }
     }
 
     IEnumerator movePlatform()

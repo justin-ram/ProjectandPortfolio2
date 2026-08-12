@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +12,8 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject mainMenu;
+    [SerializeField] GameObject menuCredit;
+    [SerializeField] GameObject menuSettings;
 
     public bool isPaused;
     public GameObject player;
@@ -19,16 +23,22 @@ public class gameManager : MonoBehaviour
 
     float timeScaleOrig;
     bool isPlayer;
+    Dictionary<string, GameObject> menus;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         instance = this;
         player = GameObject.FindWithTag("Player");
+
+        menus = new Dictionary<string, GameObject>();
+        menus.Add("Credits", menuCredit);
+        menus.Add("Main Menu", mainMenu);
+        menus.Add("Settings", menuSettings);
+
         if (player != null)
         {
             playerScript = player.GetComponent<playerController>();
-            mainMenu.SetActive(false);
             isPlayer = true;
         }
         else
@@ -75,5 +85,15 @@ public class gameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         menuActive.SetActive(false);
         menuActive = null;
+    }
+    public void openMenu(string menuName)
+    {
+        menuActive.SetActive(false);
+        menuActive = null;
+        if (menus.TryGetValue(menuName, out GameObject menu))
+        {
+            menuActive = menu;
+        }
+        menuActive.SetActive(true);
     }
 }

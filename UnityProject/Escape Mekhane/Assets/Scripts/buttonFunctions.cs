@@ -22,4 +22,18 @@ public class buttonFunctions : MonoBehaviour
         Application.Quit();
 #endif
     }
+
+    public void credits()
+    {
+        gameManager.instance.openMenu("Credits");
+    }
+
+    public void back()
+    {
+        gameManager.instance.openMenu("Main Menu");
+    }
+    public void settings()
+    {
+        gameManager.instance.openMenu("Settings");
+    }
 }

@@ -20,6 +20,7 @@ public class gameManager : MonoBehaviour
     public playerController playerScript;
     public Image playerHPBar;
     public Image playerDashBar;
+    public GameObject damageFlash;
 
     float timeScaleOrig;
     bool isPlayer;

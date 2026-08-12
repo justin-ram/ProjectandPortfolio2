@@ -2159,6 +2159,7 @@ MonoBehaviour:
   playerScript: {fileID: 0}
   playerHPBar: {fileID: 6876968101523920902}
   playerDashBar: {fileID: 7495423622288296406}
+  damageFlash: {fileID: 6613881183022011966}
 --- !u!1 &5226739267262157624
 GameObject:
   m_ObjectHideFlags: 0

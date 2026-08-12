@@ -149,9 +149,11 @@ public class playerController : MonoBehaviour, IDamage
         HP -= amount;
         healCoolDown = healCoolDownTimer;
         updatePlayerUI();
+        StartCoroutine(flashDamage());
         if (HP <= 0)
         {
             //You lose. Pauses game and put loss screen.
+            gameManager.instance.youLose();
         }
     }
 
@@ -181,9 +183,11 @@ public class playerController : MonoBehaviour, IDamage
         gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOriginal;
     }
 
-    void flashDamage()
+    IEnumerator flashDamage()
     {
-
+        gameManager.instance.damageFlash.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        gameManager.instance.damageFlash.SetActive(false);
     }
     void interactWith()
     {

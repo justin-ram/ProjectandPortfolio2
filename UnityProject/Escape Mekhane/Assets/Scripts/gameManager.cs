@@ -136,4 +136,9 @@ public class gameManager : MonoBehaviour
             interactUI.SetActive(true);
         }
     }
+    
+    public void disableInteract()
+    {
+        interactUI.SetActive(false);
+    }
 }

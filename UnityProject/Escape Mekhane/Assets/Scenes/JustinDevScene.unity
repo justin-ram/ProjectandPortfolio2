@@ -293,7 +293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 352410285}
-  HP: 1
+  HP: 5
   faceTargetSpeed: 10
   bullet: {fileID: 2298444432907026333, guid: c248435dae28b714abfe9417a28c115b, type: 3}
   gunPivot: {fileID: 239880386}

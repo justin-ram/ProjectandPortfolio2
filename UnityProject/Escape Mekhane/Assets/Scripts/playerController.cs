@@ -21,10 +21,10 @@ public class playerController : MonoBehaviour, IDamage
     int HPOriginal;
     int jumpCount;
     //timer for dash cool down
-    float dashTimer;
+    [SerializeField] float dashTimer;
     float shootTimer;
     //time before velocity is set to 0.
-    float timeDashLasts;
+    [SerializeField] float timeDashLasts;
     [SerializeField] float timeDashLastsTimer;
     [SerializeField] int interactDist;
     float healCoolDown;
@@ -116,7 +116,6 @@ public class playerController : MonoBehaviour, IDamage
         }
         if (timeDashLasts <= 0)
         {
-            dashTimer = 0;
             playerVelocity.x = 0;
         }
         if (Input.GetButtonDown("Dash") && dashTimer <= 0)
@@ -124,7 +123,6 @@ public class playerController : MonoBehaviour, IDamage
             dashDirection = transform.forward;
             dashTimer = dashCoolDownTime;
             timeDashLasts = timeDashLastsTimer;
-            updatePlayerUI();
         }
     }
 

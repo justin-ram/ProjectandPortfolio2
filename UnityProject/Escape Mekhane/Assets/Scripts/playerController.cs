@@ -21,10 +21,10 @@ public class playerController : MonoBehaviour, IDamage
     int HPOriginal;
     int jumpCount;
     //timer for dash cool down
-    [SerializeField] float dashTimer;
+    float dashTimer;
     float shootTimer;
     //time before velocity is set to 0.
-    [SerializeField] float timeDashLasts;
+    float timeDashLasts;
     [SerializeField] float timeDashLastsTimer;
     [SerializeField] int interactDist;
     float healCoolDown;

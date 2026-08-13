@@ -11,14 +11,16 @@ public class enemy2AI : MonoBehaviour, IDamage
     [Range(1, 10)][SerializeField] int HP;
     [SerializeField] int timeTillDestruction;
     [SerializeField] int faceTargetSpeed;
-    
-    
+    [SerializeField] int FOV;
+
+
 
     Color colorOrig;
     
     Vector3 playerDir;
     float explosionTimer;
     bool playerInTrigger;
+    float angleToPlayer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -30,22 +32,38 @@ public class enemy2AI : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        if (playerInTrigger)
+        if (playerInTrigger && canSeePlayer())
         {
-            agent.SetDestination(gameManager.instance.player.transform.position);
-            explosionTimer = explosionTimer + Time.deltaTime;
-            playerDir = gameManager.instance.player.transform.position - transform.position;
-            faceTarget();
-            if (explosionTimer >= timeTillDestruction)
-            {
-                Destroy(gameObject);
-            }
-            else
-            {
-                StartCoroutine(flashYellow());
-            }
+            
 
         }
+    }
+    bool canSeePlayer()
+    {
+        explosionTimer = explosionTimer + Time.deltaTime;
+        playerDir = gameManager.instance.player.transform.position - transform.position;
+        agent.SetDestination(gameManager.instance.player.transform.position);
+        angleToPlayer = Vector3.Angle(playerDir, transform.forward);
+        Debug.DrawRay(transform.position, playerDir);
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, playerDir, out hit))
+        {
+            if (angleToPlayer <= FOV && hit.collider.CompareTag("Player"))
+            {
+                faceTarget();
+                if (explosionTimer >= timeTillDestruction)
+                {
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    StartCoroutine(flashYellow());
+                }
+                return true;
+            }
+        }
+        return false;
+
     }
     public void takeDamage(int amount)
     {

@@ -141,6 +141,7 @@ MonoBehaviour:
   HP: 3
   timeTillDestruction: 5
   faceTargetSpeed: 3
+  FOV: 0
 --- !u!33 &7758925346442537793
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -234,7 +235,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 60
+  m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &487578731708843943
 NavMeshAgent:

@@ -22,6 +22,7 @@ public class ship : MonoBehaviour, IInteract
     void endGame()
     {
         //if all ship parts are collected play win menu 
+        gameManager.instance.shipWin();
     }
     
 }

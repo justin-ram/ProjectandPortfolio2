@@ -52,23 +52,21 @@ MonoBehaviour:
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 8
-  HP: 10
-  speed: 10
+  HP: 100
+  speed: 6
   jumpSpeed: 10
   maxJumps: 2
   sprintMult: 2
   shootFireRate: 1
-  shootDamage: 1
-  shootDistance: 100
+  shootDamage: 3
+  shootDistance: 25
   gravity: 15
   dashCoolDownTime: 3
-  dashSpeed: 20
-  dashTimer: 0
-  timeDashLasts: 0
+  dashSpeed: 14
   timeDashLastsTimer: 0.7
   interactDist: 10
-  healAmount: 1
-  healCoolDownTimer: 3
+  healAmount: 5
+  healCoolDownTimer: 5
   healDurationTimer: 3
 --- !u!143 &2627892245434617466
 CharacterController:

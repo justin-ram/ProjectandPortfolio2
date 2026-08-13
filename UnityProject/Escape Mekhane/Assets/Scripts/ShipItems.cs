@@ -22,6 +22,7 @@ public class ShipItems : MonoBehaviour , IInteract
     void updateShipItemsCount()
     {
         //get the shipitemscount from ui +1 it then after that destroy it
+        gameManager.instance.updateShipItemCount(1);
         Destroy(gameObject);
     }
 }

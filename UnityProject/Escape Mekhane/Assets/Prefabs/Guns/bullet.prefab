@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   rb: {fileID: 5523728463434010153}
-  damageAmount: 2
+  damageAmount: 20
   damageRate: 0
   bulletSpeed: 25
   bulletDestroyTime: 3

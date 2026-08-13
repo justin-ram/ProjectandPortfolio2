@@ -12,7 +12,10 @@ public class bossAI : MonoBehaviour, IDamage
     [SerializeField] int faceTargetSpeed;
     [Header("Weapons")]
     [SerializeField] GameObject bullet;
-    
+    [SerializeField] GameObject shipItem;
+    [SerializeField] float dropPosX;
+    [SerializeField] float dropPosY;
+    [SerializeField] float dropPosZ;
     [SerializeField] Transform gunPivot;
     [SerializeField] Transform shootPos;
     [SerializeField] float shootRate;
@@ -116,6 +119,8 @@ public class bossAI : MonoBehaviour, IDamage
         HP -= amount;
         if (HP <= 0)
         {
+            Vector3 pl = new Vector3(dropPosX, dropPosY, dropPosZ);
+            Instantiate(shipItem, pl, transform.rotation);
             Destroy(gameObject);
         }
         else

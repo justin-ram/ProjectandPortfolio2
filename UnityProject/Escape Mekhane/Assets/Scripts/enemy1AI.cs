@@ -9,7 +9,7 @@ public class enemy1AI : MonoBehaviour, IDamage
     
     [SerializeField] Renderer model;
     [Header("Stats")]
-    [Range(1, 10)][SerializeField] int HP;
+    [Range(1, 50)][SerializeField] int HP;
     [SerializeField] int faceTargetSpeed;
     [Header("Weapons")]
     [SerializeField] GameObject bullet;

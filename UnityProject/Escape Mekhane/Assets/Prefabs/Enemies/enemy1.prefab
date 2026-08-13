@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3646750797204134196}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Gun Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 675607640606764486}
   - component: {fileID: 8773451017561896231}
   - component: {fileID: 8400554166370670856}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,7 +153,7 @@ GameObject:
   - component: {fileID: 6886265976413343734}
   - component: {fileID: 6864837863146352326}
   - component: {fileID: 1857228196901472645}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Shoot Pos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -263,7 +263,8 @@ GameObject:
   - component: {fileID: 5272865176169280322}
   - component: {fileID: 8303433780573001848}
   - component: {fileID: 4405469814407632698}
-  m_Layer: 0
+  - component: {fileID: 7895133760170411790}
+  m_Layer: 7
   m_Name: enemy1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -298,13 +299,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b86c8d2bf9c18dd4499c979fa5fd9123, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 7895133760170411790}
   model: {fileID: 5272865176169280322}
   HP: 3
   faceTargetSpeed: 3
   bullet: {fileID: 2298444432907026333, guid: c248435dae28b714abfe9417a28c115b, type: 3}
   gunPivot: {fileID: 3646750797204134196}
   shootPos: {fileID: 5090806586500958107}
-  shootRate: 1
+  shootRate: 0.25
   gunRotateSpeed: 5
 --- !u!33 &3004067910387758220
 MeshFilter:
@@ -401,5 +403,27 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 10
+  m_Radius: 20
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!195 &7895133760170411790
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8226244124773005046}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 16
+  avoidancePriority: 50
+  m_AngularSpeed: 600
+  m_StoppingDistance: 8
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 0
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

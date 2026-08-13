@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5688311643765882379}
   - component: {fileID: 2607589264757831484}
   - component: {fileID: 3400437796763150755}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -273,7 +273,7 @@ GameObject:
   - component: {fileID: 4409114077837903846}
   - component: {fileID: 6051868168687826274}
   - component: {fileID: 4152735790521911062}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: endpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -378,7 +378,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2974305392500970276}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: gunpivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}

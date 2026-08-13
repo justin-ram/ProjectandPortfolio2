@@ -124,6 +124,7 @@ public class playerController : MonoBehaviour, IDamage
             dashDirection = transform.forward;
             dashTimer = dashCoolDownTime;
             timeDashLasts = timeDashLastsTimer;
+            updatePlayerUI();
         }
     }
 
@@ -181,6 +182,7 @@ public class playerController : MonoBehaviour, IDamage
     void updatePlayerUI()
     {
         gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOriginal;
+        gameManager.instance.playerDashBar.fillAmount = (float)dashTimer / dashCoolDownTime;
     }
 
     IEnumerator flashDamage()

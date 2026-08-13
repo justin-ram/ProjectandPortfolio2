@@ -65,7 +65,7 @@ MonoBehaviour:
   dashSpeed: 14
   timeDashLastsTimer: 0.7
   interactDist: 10
-  healAmount: 5
+  healAmount: 10
   healCoolDownTimer: 5
   healDurationTimer: 3
 --- !u!143 &2627892245434617466

@@ -108,6 +108,7 @@ public class playerController : MonoBehaviour, IDamage
         if (dashTimer > 0)
         {
             dashTimer -= Time.deltaTime;
+            updatePlayerUI();
         }
         if (timeDashLasts > 0)
         {
@@ -123,6 +124,7 @@ public class playerController : MonoBehaviour, IDamage
             dashDirection = transform.forward;
             dashTimer = dashCoolDownTime;
             timeDashLasts = timeDashLastsTimer;
+            updatePlayerUI();
         }
     }
 

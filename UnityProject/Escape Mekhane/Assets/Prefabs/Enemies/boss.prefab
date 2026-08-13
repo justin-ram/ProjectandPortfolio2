@@ -193,7 +193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 6773936624499642751}
   model: {fileID: 8974894878811950576}
-  HP: 60
+  HP: 18
   faceTargetSpeed: 50
   bullet: {fileID: 2298444432907026333, guid: c248435dae28b714abfe9417a28c115b, type: 3}
   shipItem: {fileID: 5042017000464638916, guid: 61f029c6fdd95e94f8a87dce0cd1d075, type: 3}
@@ -202,7 +202,7 @@ MonoBehaviour:
   dropPosZ: -96.01
   gunPivot: {fileID: 706451552422440222}
   shootPos: {fileID: 5947570144966531275}
-  shootRate: 0.25
+  shootRate: 1
   gunRotateSpeed: 55
 --- !u!33 &2224641644154387775
 MeshFilter:

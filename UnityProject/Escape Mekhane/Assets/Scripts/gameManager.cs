@@ -15,6 +15,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject mainMenu;
     [SerializeField] GameObject menuCredit;
     [SerializeField] GameObject menuSettings;
+    [SerializeField] GameObject interactUI;
 
     public bool isPaused;
     public GameObject player;
@@ -122,5 +123,17 @@ public class gameManager : MonoBehaviour
     {
         damageFlash.SetActive(false);
         statePause(menuLose);
+    }
+
+    public void showInteract(IInteract interact)
+    {
+        if (interact == null && interactUI.activeSelf || isPaused)
+        {
+            interactUI.SetActive(false);
+        }
+        else if (interact != null && !interactUI.activeSelf)
+        {
+            interactUI.SetActive(true);
+        }
     }
 }

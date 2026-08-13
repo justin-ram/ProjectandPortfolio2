@@ -140,7 +140,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -14.290487, y: 4.15, z: 14.909104}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 2, y: 4.039681, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2974305392500970276}
@@ -212,13 +212,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 4872206959406559085}
-  HP: 5
+  HP: 6
   faceTargetSpeed: 10
   bullet: {fileID: 2298444432907026333, guid: c248435dae28b714abfe9417a28c115b, type: 3}
   gunPivot: {fileID: 2974305392500970276}
   gunEndPoint: {fileID: 2183225431598420397}
-  shootRate: 0.25
-  gunRotateSpeed: 15
+  shootRate: 0.5
+  gunRotateSpeed: 10
 --- !u!65 &9194820834970709516
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -259,7 +259,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 10
+  m_Radius: 25
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5211179708453269684
 GameObject:

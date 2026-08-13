@@ -201,10 +201,7 @@ public class playerController : MonoBehaviour, IDamage
         {
             Debug.Log(hit.collider.name);
             IInteract interact = hit.collider.GetComponent<IInteract>();
-            if (interact != null)
-            {
-                gameManager.instance.showInteract(interact);
-            }
+            gameManager.instance.showInteract(interact);
         }
         else
         {

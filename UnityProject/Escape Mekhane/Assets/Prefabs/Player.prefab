@@ -63,7 +63,9 @@ MonoBehaviour:
   gravity: 15
   dashCoolDownTime: 3
   dashSpeed: 20
-  timeDashLastsTimer: 0.8
+  dashTimer: 0
+  timeDashLasts: 0
+  timeDashLastsTimer: 0.7
   interactDist: 10
   healAmount: 1
   healCoolDownTimer: 3

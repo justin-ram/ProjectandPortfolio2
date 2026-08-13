@@ -3,7 +3,7 @@ using System.Collections;
 
 public class damage : MonoBehaviour
 {
-    enum damageType {bullet, stationary, DOT}
+    enum damageType {bullet, stationary, DOT, proximity}
     [SerializeField] damageType type;
     [SerializeField] Rigidbody rb;
     [SerializeField] int damageAmount;
@@ -40,6 +40,10 @@ public class damage : MonoBehaviour
                 Instantiate(hitEffect, transform.position, Quaternion.identity);
             }
             Destroy(gameObject);
+        }
+        if(type == damageType.proximity)
+        {
+            Destroy(transform.parent.gameObject);
         }
     }
     private void OnTriggerStay(Collider other)

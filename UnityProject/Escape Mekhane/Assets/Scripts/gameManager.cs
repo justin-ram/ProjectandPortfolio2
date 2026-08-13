@@ -25,6 +25,7 @@ public class gameManager : MonoBehaviour
     float timeScaleOrig;
     bool isPlayer;
     Dictionary<string, GameObject> menus;
+    int gameGoalCount;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -96,5 +97,20 @@ public class gameManager : MonoBehaviour
             menuActive = menu;
         }
         menuActive.SetActive(true);
+    }
+
+    public void updateGameGoal(int amount)
+    {
+        gameGoalCount += amount;
+
+        if (gameGoalCount <= 0)
+        {
+            statePause(menuWin);
+        }
+    }
+
+    public void youLose()
+    {
+        statePause(menuLose);
     }
 }

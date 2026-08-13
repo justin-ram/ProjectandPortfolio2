@@ -36,4 +36,8 @@ public class buttonFunctions : MonoBehaviour
     {
         gameManager.instance.openMenu("Settings");
     }
+    public void start()
+    {
+        SceneManager.LoadScene("Level1");
+    }
 }

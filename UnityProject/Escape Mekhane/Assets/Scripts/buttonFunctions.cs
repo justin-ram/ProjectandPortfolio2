@@ -10,6 +10,7 @@ public class buttonFunctions : MonoBehaviour
 
     public void restart()
     {
+        Debug.Log("RESTARTING");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         gameManager.instance.stateUnpause();
     }
@@ -17,6 +18,7 @@ public class buttonFunctions : MonoBehaviour
     public void quit()
     {
 #if UNITY_EDITOR
+        Debug.Log("QUITING");
         UnityEditor.EditorApplication.isPlaying = false;
 #else
         Application.Quit();

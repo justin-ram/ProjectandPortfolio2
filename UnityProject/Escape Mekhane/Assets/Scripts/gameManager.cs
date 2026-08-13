@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class gameManager : MonoBehaviour
 {
@@ -21,11 +22,14 @@ public class gameManager : MonoBehaviour
     public Image playerHPBar;
     public Image playerDashBar;
     public GameObject damageFlash;
+    public TMP_Text shipPartsNeededTXT;
+    public TMP_Text shipShipPartsCollectedTXT;
 
     float timeScaleOrig;
     bool isPlayer;
     Dictionary<string, GameObject> menus;
-    int gameGoalCount;
+    int shipItemGoalCount;
+    [SerializeField] int winGameGoalCount;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -50,8 +54,10 @@ public class gameManager : MonoBehaviour
             menuActive.SetActive(true);
             playerHPBar.transform.parent.gameObject.SetActive(false);
             playerDashBar.transform.parent.gameObject.SetActive(false);
+
         }
         timeScaleOrig = Time.timeScale;
+        shipPartsNeededTXT.text = winGameGoalCount.ToString("F0");
     }
 
     // Update is called once per frame
@@ -99,18 +105,22 @@ public class gameManager : MonoBehaviour
         menuActive.SetActive(true);
     }
 
-    public void updateGameGoal(int amount)
+    public void shipWin()
     {
-        gameGoalCount += amount;
-
-        if (gameGoalCount <= 0)
+        if(shipItemGoalCount == winGameGoalCount)
         {
             statePause(menuWin);
         }
     }
+    public void updateShipItemCount(int amount)
+    {
+        shipItemGoalCount += amount;
+        shipShipPartsCollectedTXT.text = shipItemGoalCount.ToString("F0");
+    }
 
     public void youLose()
     {
+        damageFlash.SetActive(false);
         statePause(menuLose);
     }
 }

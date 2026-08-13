@@ -11,7 +11,7 @@ public class playerController : MonoBehaviour, IDamage
     [Range(5, 10)][SerializeField] int jumpSpeed;
     [SerializeField] int maxJumps;
     [SerializeField] int sprintMult;
-    [SerializeField] int shootFireRate;
+    [SerializeField] float shootFireRate;
     [SerializeField] int shootDamage;
     [SerializeField] int shootDistance;
     [SerializeField] int gravity;

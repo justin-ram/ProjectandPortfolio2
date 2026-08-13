@@ -114,6 +114,7 @@ public class gameManager : MonoBehaviour
 
     public void youLose()
     {
+        damageFlash.SetActive(false);
         statePause(menuLose);
     }
 }

@@ -24,6 +24,7 @@ public class gameManager : MonoBehaviour
     public Image playerHPBar;
     public Image playerDashBar;
     public GameObject damageFlash;
+    public GameObject dashFlash;
     public TMP_Text shipPartsNeededTXT;
     public TMP_Text shipShipPartsCollectedTXT;
 

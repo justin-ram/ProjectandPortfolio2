@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using UnityEditor;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -17,6 +17,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuSettings;
     [SerializeField] GameObject cursor;
     [SerializeField] GameObject interactUI;
+    [SerializeField] GameObject interactWarning;
 
     public bool isPaused;
     public GameObject player;
@@ -33,6 +34,7 @@ public class gameManager : MonoBehaviour
     Dictionary<string, GameObject> menus;
     int shipItemGoalCount;
     [SerializeField] int winGameGoalCount;
+    [SerializeField] float warningTimer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -117,6 +119,10 @@ public class gameManager : MonoBehaviour
         {
             statePause(menuWin);
         }
+        else
+        {
+            StartCoroutine(warnInteract());
+        }
     }
     public void updateShipItemCount(int amount)
     {
@@ -145,5 +151,12 @@ public class gameManager : MonoBehaviour
     public void disableInteract()
     {
         interactUI.SetActive(false);
+    }
+
+    IEnumerator warnInteract()
+    {
+        interactWarning.SetActive(true);
+        yield return new WaitForSeconds(warningTimer);
+        interactWarning.SetActive(false);
     }
 }

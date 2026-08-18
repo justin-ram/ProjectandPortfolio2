@@ -51,6 +51,7 @@ public class playerController : MonoBehaviour, IDamage
         sprint();
         dash();
         HealHp();
+        interactUpdateUi();
     }
 
     void movement()
@@ -190,6 +191,22 @@ public class playerController : MonoBehaviour, IDamage
         gameManager.instance.damageFlash.SetActive(true);
         yield return new WaitForSeconds(0.1f);
         gameManager.instance.damageFlash.SetActive(false);
+    }
+
+    void interactUpdateUi()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, interactDist, ~ignoreLayer))
+        {
+            Debug.Log(hit.collider.name);
+            IInteract interact = hit.collider.GetComponent<IInteract>();
+            gameManager.instance.showInteract(interact);
+        }
+        else
+        {
+            gameManager.instance.disableInteract();
+        }
     }
     void interactWith()
     {

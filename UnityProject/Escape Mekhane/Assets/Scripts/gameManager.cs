@@ -15,6 +15,8 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject mainMenu;
     [SerializeField] GameObject menuCredit;
     [SerializeField] GameObject menuSettings;
+    [SerializeField] GameObject cursor;
+    [SerializeField] GameObject interactUI;
 
     public bool isPaused;
     public GameObject player;
@@ -54,6 +56,7 @@ public class gameManager : MonoBehaviour
             menuActive.SetActive(true);
             playerHPBar.transform.parent.gameObject.SetActive(false);
             playerDashBar.transform.parent.gameObject.SetActive(false);
+            cursor.SetActive(false);
 
         }
         timeScaleOrig = Time.timeScale;
@@ -82,6 +85,7 @@ public class gameManager : MonoBehaviour
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+        cursor.SetActive(false);
         menuActive = menu;
         menuActive.SetActive(true);
     }
@@ -91,6 +95,7 @@ public class gameManager : MonoBehaviour
         Time.timeScale = timeScaleOrig;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        cursor.SetActive(true);
         menuActive.SetActive(false);
         menuActive = null;
     }
@@ -122,5 +127,22 @@ public class gameManager : MonoBehaviour
     {
         damageFlash.SetActive(false);
         statePause(menuLose);
+    }
+
+    public void showInteract(IInteract interact)
+    {
+        if (interact == null && interactUI.activeSelf || isPaused)
+        {
+            interactUI.SetActive(false);
+        }
+        else if (interact != null && !interactUI.activeSelf)
+        {
+            interactUI.SetActive(true);
+        }
+    }
+    
+    public void disableInteract()
+    {
+        interactUI.SetActive(false);
     }
 }

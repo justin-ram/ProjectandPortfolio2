@@ -3551,6 +3551,7 @@ MonoBehaviour:
   mainMenu: {fileID: 3386826421302826868}
   menuCredit: {fileID: 3183520508732996300}
   menuSettings: {fileID: 3568109224545103673}
+  cursor: {fileID: 2486227233325409452}
   interactUI: {fileID: 8014524863317186667}
   isPaused: 0
   player: {fileID: 0}

@@ -121,7 +121,7 @@ public class gameManager : MonoBehaviour
         }
         else
         {
-            StartCoroutine(warnInteract());
+            StartCoroutine(warnInteract(interactWarning));
         }
     }
     public void updateShipItemCount(int amount)
@@ -153,10 +153,10 @@ public class gameManager : MonoBehaviour
         interactUI.SetActive(false);
     }
 
-    IEnumerator warnInteract()
+    IEnumerator warnInteract(GameObject popUp)
     {
-        interactWarning.SetActive(true);
+        popUp.SetActive(true);
         yield return new WaitForSeconds(warningTimer);
-        interactWarning.SetActive(false);
+        popUp.SetActive(false);
     }
 }

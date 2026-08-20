@@ -24,11 +24,10 @@ public class playerController : MonoBehaviour, IDamage
     //timer for dash cool down
     float dashTimer;
     float shootTimer;
+   
+    [SerializeField] float timeDashLastsTimer;
     //time before velocity is set to 0.
     float timeDashLasts;
-
-    [SerializeField] float invincibilityDuration;
-    [SerializeField] float timeDashLastsTimer;
     [SerializeField] int interactDist;
     float healCoolDown;
     [SerializeField] int healAmount;
@@ -136,7 +135,7 @@ public class playerController : MonoBehaviour, IDamage
     IEnumerator invincibilityWindow()
     {
         gameObject.layer = LayerMask.NameToLayer("Invincible");
-        yield return new WaitForSeconds(invincibilityDuration);
+        yield return new WaitForSeconds(timeDashLastsTimer);
         gameObject.layer = LayerMask.NameToLayer("Player");
     }
     void shoot()

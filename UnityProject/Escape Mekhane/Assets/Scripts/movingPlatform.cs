@@ -1,20 +1,19 @@
 using UnityEngine;
 using System.Collections;
-using Unity.VisualScripting;
 
 public class movingPlatform : MonoBehaviour
 {
-    [SerializeField] GameObject pointA;
     [SerializeField] GameObject pointB;
     [SerializeField] int movementSpeed;
     [SerializeField] float delayTimer;
     [SerializeField] GameObject platform;
 
+    Vector3 startingPos;
     Vector3 targetPos;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        platform.transform.position = pointA.transform.position;
+        startingPos = platform.transform.position;
         targetPos = pointB.transform.position;
         StartCoroutine(movePlatform());
     }
@@ -50,13 +49,13 @@ public class movingPlatform : MonoBehaviour
                 yield return null;
             }
             
-            if (targetPos == pointA.transform.position)
+            if (targetPos == startingPos)
             {
                 targetPos = pointB.transform.position;
             }
             else if (targetPos == pointB.transform.position)
             {
-                targetPos = pointA.transform.position;
+                targetPos = startingPos;
             }
 
             yield return new WaitForSeconds(delayTimer);

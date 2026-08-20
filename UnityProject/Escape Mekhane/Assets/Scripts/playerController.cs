@@ -6,6 +6,7 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreLayer;
 
+
     [Range(1, 100)][SerializeField] int HP;
     [Range(5, 10)][SerializeField] int speed;
     [Range(5, 10)][SerializeField] int jumpSpeed;
@@ -25,6 +26,8 @@ public class playerController : MonoBehaviour, IDamage
     float shootTimer;
     //time before velocity is set to 0.
     float timeDashLasts;
+
+    [SerializeField] float invincibilityDuration;
     [SerializeField] float timeDashLastsTimer;
     [SerializeField] int interactDist;
     float healCoolDown;
@@ -126,9 +129,16 @@ public class playerController : MonoBehaviour, IDamage
             dashTimer = dashCoolDownTime;
             timeDashLasts = timeDashLastsTimer;
             updatePlayerUI();
+            StartCoroutine(invincibilityWindow());
         }
     }
 
+    IEnumerator invincibilityWindow()
+    {
+        gameObject.layer = LayerMask.NameToLayer("Invincible");
+        yield return new WaitForSeconds(invincibilityDuration);
+        gameObject.layer = LayerMask.NameToLayer("Player");
+    }
     void shoot()
     {
         shootTimer = 0;
@@ -189,7 +199,7 @@ public class playerController : MonoBehaviour, IDamage
     IEnumerator flashDamage()
     {
         gameManager.instance.damageFlash.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.3f);
         gameManager.instance.damageFlash.SetActive(false);
     }
 
@@ -222,5 +232,7 @@ public class playerController : MonoBehaviour, IDamage
             }
         }
     }
+
+
 
 }

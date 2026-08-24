@@ -2,15 +2,17 @@ using UnityEngine;
 
 public class gunPickup : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] gunStats gun;
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        IPickup pickup = other.GetComponent<IPickup>();
+        if(pickup != null )
+        {
+            gun.ammoCur = gun.ammoMax;
+            pickup.getGunStats(gun);
+            Destroy(gameObject);
+        }
+
     }
 }

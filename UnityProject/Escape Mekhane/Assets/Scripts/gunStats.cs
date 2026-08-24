@@ -7,7 +7,7 @@ public class gunStats : ScriptableObject
 
     [Range(1, 100)][SerializeField] public int shootDamage;
     [Range(1, 100)][SerializeField] public int shootDistance;
-    [Range(1, 100)][SerializeField] public float shootFireRate;
+    [Range(0.1f, 2)][SerializeField] public float shootFireRate;
 
     public int ammoCur;
 

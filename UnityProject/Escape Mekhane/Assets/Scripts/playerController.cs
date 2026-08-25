@@ -150,7 +150,9 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, gunInv[gunInvPos].shootDistance, ~ignoreLayer))
         {
-           // Debug.Log(hit.collider.name);
+            // Debug.Log(hit.collider.name);
+
+            Instantiate(gunInv[gunInvPos].hitEffect, hit.point, Quaternion.identity);
             IDamage dmg = hit.collider.GetComponent<IDamage>();
             if (dmg != null)
             {

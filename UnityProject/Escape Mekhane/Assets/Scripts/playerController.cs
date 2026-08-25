@@ -1,20 +1,18 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class playerController : MonoBehaviour, IDamage
+public class playerController : MonoBehaviour, IDamage, IPickup
 {
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreLayer;
 
-
+    [Header("Stats")]
     [Range(1, 100)][SerializeField] int HP;
     [Range(5, 10)][SerializeField] int speed;
     [Range(5, 10)][SerializeField] int jumpSpeed;
     [SerializeField] int maxJumps;
     [SerializeField] int sprintMult;
-    [SerializeField] float shootFireRate;
-    [SerializeField] int shootDamage;
-    [SerializeField] int shootDistance;
     [SerializeField] int gravity;
     //how long before you can press dash again
     [SerializeField] float dashCoolDownTime;
@@ -24,7 +22,6 @@ public class playerController : MonoBehaviour, IDamage
     //timer for dash cool down
     float dashTimer;
     float shootTimer;
-   
     [SerializeField] float timeDashLastsTimer;
     //time before velocity is set to 0.
     float timeDashLasts;
@@ -35,6 +32,14 @@ public class playerController : MonoBehaviour, IDamage
     float healDuration;
     [SerializeField] float healDurationTimer;
 
+    [Header("Gun Stuff")]
+    [SerializeField] List<gunStats> gunInv = new List<gunStats>();
+    [SerializeField] GameObject gunModel;
+    [SerializeField] float shootFireRate;
+    [SerializeField] int shootDamage;
+    [SerializeField] int shootDistance;
+
+    int gunInvPos;
     Vector3 moveDirection;
     Vector3 playerVelocity;
     Vector3 dashDirection;
@@ -195,6 +200,22 @@ public class playerController : MonoBehaviour, IDamage
         gameManager.instance.playerDashBar.fillAmount = (float)dashTimer / dashCoolDownTime;
     }
 
+    public void getGunStats(gunStats gun)
+    {
+        gunInv.Add(gun);
+        gunInvPos = gunInv.Count - 1;
+        changeGunModel();
+    }
+
+    void changeGunModel()
+    {
+        gunModel.GetComponent<MeshFilter>().sharedMesh = gunInv[gunInvPos].gunModel.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunInv[gunInvPos].gunModel.GetComponent<MeshRenderer>().sharedMaterial;
+    }
+    void selectGun()
+    {
+
+    }
     IEnumerator flashDamage()
     {
         gameManager.instance.damageFlash.SetActive(true);
@@ -231,7 +252,6 @@ public class playerController : MonoBehaviour, IDamage
             }
         }
     }
-
 
 
 }

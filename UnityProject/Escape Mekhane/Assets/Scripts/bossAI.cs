@@ -30,8 +30,7 @@ public class bossAI : MonoBehaviour, IDamage
     float randomZ;
     int doesTelleport;
     float telleportTime;
-    float cooldown;
-    bool altFire;
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

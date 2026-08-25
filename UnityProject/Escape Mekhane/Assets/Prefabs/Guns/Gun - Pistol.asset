@@ -15,9 +15,9 @@ MonoBehaviour:
   gunModel: {fileID: 0}
   shootDamage: 1
   shootDistance: 1
-  shootFireRate: 0.1
-  ammoCur: 0
-  ammoMax: 5
+  shootFireRate: 0.7
+  ammoCur: 5
+  ammoMax: 10
   hitEffect: {fileID: 0}
   shootSound: []
   shootSoundVol: 0

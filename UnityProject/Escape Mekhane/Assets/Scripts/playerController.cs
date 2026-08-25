@@ -36,7 +36,18 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     [SerializeField] List<gunStats> gunInv = new List<gunStats>();
     [SerializeField] GameObject gunModel;
 
+    [Header("Audio")]
+    public AudioClip[] audJumpSound;
+    [Range(0, 1)][SerializeField] float audJumpVol;
+    public AudioClip[] audStepsSound;
+    [Range(0, 1)][SerializeField] float audStepsVol;
+    public AudioClip[] audDashSound;
+    [Range(0, 1)][SerializeField] float audDashVol;
+    public AudioClip[] audHurtSound;
+    [Range(0, 1)][SerializeField] float audHurtVol;
     int gunInvPos;
+    bool isSprinting;
+    bool isPlayingSteps;
     Vector3 moveDirection;
     Vector3 playerVelocity;
     Vector3 dashDirection;
@@ -67,6 +78,11 @@ public class playerController : MonoBehaviour, IDamage, IPickup
         {
             jumpCount = 0;
             playerVelocity.y = 0;
+            
+            if(moveDirection.magnitude > 0.3 && !isPlayingSteps)
+            {
+                StartCoroutine(playSteps());
+            }
         }
 
         moveDirection = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
@@ -95,11 +111,28 @@ public class playerController : MonoBehaviour, IDamage, IPickup
         if (Input.GetButtonDown("Sprint"))
         {
             speed *= sprintMult;
+            isSprinting = true;
         }
         else if (Input.GetButtonUp("Sprint"))
         {
             speed /= sprintMult;
+            isSprinting = false;
         }
+    }
+
+    IEnumerator playSteps()
+    {
+        isPlayingSteps = true;
+        audioManager.instance.audPlayer.PlayOneShot(audStepsSound[Random.Range(0, audStepsSound.Length)], audStepsVol);
+        if(isSprinting)
+        {
+            yield return new WaitForSeconds(0.3f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(0.5f);
+        }
+        isPlayingSteps = false;
     }
     void jump()
     {
@@ -107,6 +140,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
         {
             jumpCount++;
             playerVelocity.y = jumpSpeed;
+            audioManager.instance.audPlayer.PlayOneShot(audJumpSound[Random.Range(0, audJumpSound.Length)], audJumpVol);
         }
     }
 
@@ -133,6 +167,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
             timeDashLasts = timeDashLastsTimer;
             updatePlayerUI();
             StartCoroutine(invincibilityWindow());
+            audioManager.instance.audPlayer.PlayOneShot(audDashSound[Random.Range(0, audDashSound.Length)], audDashVol);
         }
     }
 
@@ -145,13 +180,14 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     void shoot()
     {
         shootTimer = 0;
+        audioManager.instance.audPlayer.PlayOneShot(gunInv[gunInvPos].shootSound[Random.Range(0, gunInv[gunInvPos].shootSound.Length)], gunInv[gunInvPos].shootSoundVol);
 
         RaycastHit hit;
 
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, gunInv[gunInvPos].shootDistance, ~ignoreLayer))
         {
             // Debug.Log(hit.collider.name);
-
+          
             Instantiate(gunInv[gunInvPos].hitEffect, hit.point, Quaternion.identity);
             IDamage dmg = hit.collider.GetComponent<IDamage>();
             if (dmg != null)
@@ -164,6 +200,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     public void takeDamage(int amount)
     {
         HP -= amount;
+        audioManager.instance.audPlayer.PlayOneShot(audHurtSound[Random.Range(0, audHurtSound.Length)], audHurtVol);
         healCoolDown = healCoolDownTimer;
         updatePlayerUI();
         StartCoroutine(flashDamage());

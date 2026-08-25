@@ -35,9 +35,6 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     [Header("Gun Stuff")]
     [SerializeField] List<gunStats> gunInv = new List<gunStats>();
     [SerializeField] GameObject gunModel;
-    [SerializeField] float shootFireRate;
-    [SerializeField] int shootDamage;
-    [SerializeField] int shootDistance;
 
     int gunInvPos;
     Vector3 moveDirection;
@@ -63,8 +60,8 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
     void movement()
     {
-        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDistance, Color.red);
-        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * interactDist, Color.blue);
+        //Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * gunInv[gunInvPos].shootDistance, Color.red);
+        //Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * interactDist, Color.blue);
         shootTimer += Time.deltaTime;
         if (controller.isGrounded)
         {
@@ -80,7 +77,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
         controller.Move(playerVelocity * Time.deltaTime);
         playerVelocity.y -= gravity * Time.deltaTime;
 
-        if (Input.GetButton("Fire1") && shootTimer > shootFireRate)
+        if (Input.GetButton("Fire1") && gunInv.Count > 0 &&shootTimer > gunInv[gunInvPos].shootFireRate)
         {
             shoot();
         }
@@ -89,6 +86,8 @@ public class playerController : MonoBehaviour, IDamage, IPickup
         {
             interactWith();
         }
+
+        selectGun();
     }
 
     void sprint()
@@ -149,13 +148,13 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
         RaycastHit hit;
 
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDistance, ~ignoreLayer))
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, gunInv[gunInvPos].shootDistance, ~ignoreLayer))
         {
-            Debug.Log(hit.collider.name);
+           // Debug.Log(hit.collider.name);
             IDamage dmg = hit.collider.GetComponent<IDamage>();
             if (dmg != null)
             {
-                dmg.takeDamage(shootDamage);
+                dmg.takeDamage(gunInv[gunInvPos].shootDamage);
             }
         }
     }
@@ -214,7 +213,16 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     }
     void selectGun()
     {
-
+        if(Input.GetAxis("Mouse ScrollWheel") > 0 && gunInvPos < gunInv.Count - 1)
+        {
+            gunInvPos++;
+            changeGunModel();
+        }
+        else if(Input.GetAxis("Mouse ScrollWheel") < 0 && gunInvPos > 0)
+        {
+            gunInvPos--;
+            changeGunModel(); 
+        }
     }
     IEnumerator flashDamage()
     {
@@ -229,7 +237,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, interactDist, ~ignoreLayer))
         {
-            Debug.Log(hit.collider.name);
+           // Debug.Log(hit.collider.name);
             IInteract interact = hit.collider.GetComponent<IInteract>();
             gameManager.instance.showInteract(interact);
         }
@@ -244,7 +252,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, interactDist, ~ignoreLayer))
         {
-            Debug.Log(hit.collider.name);
+          //  Debug.Log(hit.collider.name);
             IInteract interact = hit.collider.GetComponent<IInteract>();
             if (interact != null)
             {

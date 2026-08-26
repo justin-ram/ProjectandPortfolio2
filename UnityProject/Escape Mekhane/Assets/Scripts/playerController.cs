@@ -48,6 +48,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     int gunInvPos;
     bool isSprinting;
     bool isPlayingSteps;
+
     Vector3 moveDirection;
     Vector3 playerVelocity;
     Vector3 dashDirection;
@@ -142,6 +143,11 @@ public class playerController : MonoBehaviour, IDamage, IPickup
             playerVelocity.y = jumpSpeed;
             audioManager.instance.audPlayer.PlayOneShot(audJumpSound[Random.Range(0, audJumpSound.Length)], audJumpVol);
         }
+    }
+
+    public void jumpPowerUp(int amount)
+    {
+        maxJumps += amount;
     }
 
     void dash()

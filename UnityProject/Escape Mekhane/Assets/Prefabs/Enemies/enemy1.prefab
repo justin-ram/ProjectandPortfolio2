@@ -299,8 +299,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b86c8d2bf9c18dd4499c979fa5fd9123, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 0}
-  model: {fileID: 0}
+  agent: {fileID: 5672972657837829655}
+  model: {fileID: 5272865176169280322}
   HP: 15
   faceTargetSpeed: 3
   bullet: {fileID: 2298444432907026333, guid: c248435dae28b714abfe9417a28c115b, type: 3}

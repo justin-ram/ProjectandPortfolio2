@@ -40,9 +40,9 @@ public class enemy2AI : MonoBehaviour, IDamage
     }
     bool canSeePlayer()
     {
-        explosionTimer = explosionTimer + Time.deltaTime;
+        
         playerDir = gameManager.instance.player.transform.position - transform.position;
-        agent.SetDestination(gameManager.instance.player.transform.position);
+        
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
         Debug.DrawRay(transform.position, playerDir);
         RaycastHit hit;
@@ -50,6 +50,8 @@ public class enemy2AI : MonoBehaviour, IDamage
         {
             if (angleToPlayer <= FOV && hit.collider.CompareTag("Player"))
             {
+                explosionTimer = explosionTimer + Time.deltaTime;
+                agent.SetDestination(gameManager.instance.player.transform.position);
                 faceTarget();
                 if (explosionTimer >= timeTillDestruction)
                 {
@@ -59,6 +61,7 @@ public class enemy2AI : MonoBehaviour, IDamage
                 {
                     StartCoroutine(flashYellow());
                 }
+                
                 return true;
             }
         }
@@ -101,20 +104,20 @@ public class enemy2AI : MonoBehaviour, IDamage
     }
     IEnumerator flashYellow()
     {
-       
-        while(true)
+
+        while (true)
         {
             model.material.color = Color.yellow;
             yield return new WaitForSeconds(.1f);
-            
-            
+
+
             model.material.color = colorOrig;
             yield return new WaitForSeconds(.1f);
-            
-            
+
+
         }
-       
+
     }
-    
+
 
 }

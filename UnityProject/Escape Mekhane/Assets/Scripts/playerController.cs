@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class playerController : MonoBehaviour, IDamage, IPickup
 {
@@ -14,6 +15,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     [SerializeField] int maxJumps;
     [SerializeField] int sprintMult;
     [SerializeField] int gravity;
+    int gravityOrig;
     //how long before you can press dash again
     [SerializeField] float dashCoolDownTime;
     [SerializeField] int dashSpeed;
@@ -49,6 +51,15 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     bool isSprinting;
     bool isPlayingSteps;
 
+    [Header("Grapple Things")]
+    [SerializeField] int grappleDistance;
+    [SerializeField] float grappleMoveDist;
+    [SerializeField] int grappleSpeed;
+
+    Vector3 hitPosition;
+    bool isGrappling;
+    Vector3 grappleDirection;
+
     Vector3 moveDirection;
     Vector3 playerVelocity;
     Vector3 dashDirection;
@@ -57,6 +68,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     void Start()
     {
         HPOriginal = HP;
+        gravityOrig = gravity;
         updatePlayerUI();
     }
 
@@ -66,6 +78,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
         movement();
         sprint();
         dash();
+        grapple();
         HealHp();
         interactUpdateUi();
     }
@@ -79,22 +92,28 @@ public class playerController : MonoBehaviour, IDamage, IPickup
         {
             jumpCount = 0;
             playerVelocity.y = 0;
-            
-            if(moveDirection.magnitude > 0.3 && !isPlayingSteps)
+
+            if (moveDirection.magnitude > 0.3 && !isPlayingSteps)
             {
                 StartCoroutine(playSteps());
             }
         }
 
-        moveDirection = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
-        controller.Move(moveDirection.normalized * speed * Time.deltaTime);
+        if (!isGrappling)
+        {
+            moveDirection = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
+            controller.Move(moveDirection.normalized * speed * Time.deltaTime);
+        }
 
 
-        jump();
-        controller.Move(playerVelocity * Time.deltaTime);
-        playerVelocity.y -= gravity * Time.deltaTime;
+        if (!isGrappling)
+        {
+            jump();
+            controller.Move(playerVelocity * Time.deltaTime);
+            playerVelocity.y -= gravity * Time.deltaTime;
+        }
 
-        if (Input.GetButton("Fire1") && gunInv.Count > 0 &&shootTimer > gunInv[gunInvPos].shootFireRate)
+        if (Input.GetButton("Fire1") && gunInv.Count > 0 && shootTimer > gunInv[gunInvPos].shootFireRate)
         {
             shoot();
         }
@@ -125,7 +144,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     {
         isPlayingSteps = true;
         audioManager.instance.audPlayer.PlayOneShot(audStepsSound[Random.Range(0, audStepsSound.Length)], audStepsVol);
-        if(isSprinting)
+        if (isSprinting)
         {
             yield return new WaitForSeconds(0.3f);
         }
@@ -166,7 +185,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
         {
             playerVelocity.x = 0;
         }
-        if (Input.GetButtonDown("Dash") && dashTimer <= 0)
+        if (Input.GetButtonDown("Dash") && dashTimer <= 0 && isGrappling == false)
         {
             dashDirection = transform.forward;
             dashTimer = dashCoolDownTime;
@@ -193,7 +212,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, gunInv[gunInvPos].shootDistance, ~ignoreLayer))
         {
             // Debug.Log(hit.collider.name);
-          
+
             Instantiate(gunInv[gunInvPos].hitEffect, hit.point, Quaternion.identity);
             IDamage dmg = hit.collider.GetComponent<IDamage>();
             if (dmg != null)
@@ -258,15 +277,15 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     }
     void selectGun()
     {
-        if(Input.GetAxis("Mouse ScrollWheel") > 0 && gunInvPos < gunInv.Count - 1)
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && gunInvPos < gunInv.Count - 1)
         {
             gunInvPos++;
             changeGunModel();
         }
-        else if(Input.GetAxis("Mouse ScrollWheel") < 0 && gunInvPos > 0)
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && gunInvPos > 0)
         {
             gunInvPos--;
-            changeGunModel(); 
+            changeGunModel();
         }
     }
     IEnumerator flashDamage()
@@ -282,7 +301,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, interactDist, ~ignoreLayer))
         {
-           // Debug.Log(hit.collider.name);
+            // Debug.Log(hit.collider.name);
             IInteract interact = hit.collider.GetComponent<IInteract>();
             gameManager.instance.showInteract(interact);
         }
@@ -297,13 +316,46 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, interactDist, ~ignoreLayer))
         {
-          //  Debug.Log(hit.collider.name);
+            //  Debug.Log(hit.collider.name);
             IInteract interact = hit.collider.GetComponent<IInteract>();
             if (interact != null)
             {
                 interact.Interact();
             }
         }
+    }
+
+    void grapple()
+    {
+        if (Input.GetButtonDown("Grapple"))
+        {
+            RaycastHit hit;
+
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, grappleDistance, ~ignoreLayer))
+            {
+                Debug.Log(hit.collider.name);
+                IGrapple grapple = hit.collider.GetComponent<IGrapple>();
+                if (grapple != null)
+                {
+                    hitPosition = hit.point;
+                    grappleDirection = hit.point - transform.position;
+                    isGrappling = true;
+                    gravity = 0;
+                }
+            }
+
+
+        }
+        if (isGrappling)
+        {
+            controller.Move(grappleDirection.normalized * grappleSpeed * Time.deltaTime);
+            if (Vector3.Distance(hitPosition, transform.position) < 0.9f)
+            {
+                isGrappling = false;
+                gravity = gravityOrig;
+            }
+        }
+
     }
 
 

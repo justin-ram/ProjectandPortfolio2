@@ -45,10 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07e6e04f1a5b34a4a89efbe5a13bc357, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToSpawn: {fileID: 0}
-  amountToSpawn: 0
-  spawnRate: 0
-  spawnDist: 0
+  objectToSpawn: {fileID: 8226244124773005046, guid: 25dbbdf3ca0b8c249b02e464a2fa06f2, type: 3}
+  amountToSpawn: 3
+  spawnRate: 4
+  spawnDist: 5
 --- !u!135 &1816993041154168716
 SphereCollider:
   m_ObjectHideFlags: 0

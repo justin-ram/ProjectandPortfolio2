@@ -48,8 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 4298504610668589237}
-  HP: 9
-  speed: 140
+  HP: 30
+  speed: 80
   isBossShield: 0
   isLayer1: 0
   isLayer2: 0

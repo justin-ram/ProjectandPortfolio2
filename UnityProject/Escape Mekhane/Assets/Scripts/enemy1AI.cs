@@ -6,88 +6,136 @@ using UnityEngine.AI;
 public class enemy1AI : MonoBehaviour, IDamage
 {
     [SerializeField] NavMeshAgent agent;
-    
     [SerializeField] Renderer model;
+
     [Header("Stats")]
-    [Range(1, 50)][SerializeField] int HP;
+    [Range(1, 100)][SerializeField] int HP;
     [SerializeField] int faceTargetSpeed;
+    [SerializeField] int FOV;
+    [SerializeField] int roamDist;
+    [SerializeField] int roamPauseTime;
+
     [Header("Weapons")]
     [SerializeField] GameObject bullet;
     [SerializeField] Transform gunPivot;
     [SerializeField] Transform shootPos;
     [SerializeField] float shootRate;
     [SerializeField] int gunRotateSpeed;
-    [SerializeField] int FOV;
-   
+
+
     Color colorOrig;
 
     Vector3 playerDir;
+    Vector3 startingPos;
+
     float shootTimer;
-    bool playerInTrigger;
     float angleToPlayer;
+    float roamTimer;
+    float stoppingDistOrig;
+    bool playerInTrigger;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         colorOrig = model.material.color;
         
-        
+        startingPos = transform.position;
+        stoppingDistOrig = agent.stoppingDistance;
+    }
+
+    void checkRoam()
+    {
+        if (agent.remainingDistance < 0.1)
+        {
+            roamTimer += Time.deltaTime;
+
+            if (roamTimer > roamPauseTime)
+            {
+                roam();
+            }
+        }
+    }
+
+    void roam()
+    {
+        roamTimer = 0;
+        agent.stoppingDistance = 0;
+
+        Vector3 ranPos = Random.insideUnitSphere * roamDist;
+
+        ranPos += startingPos;
+
+        NavMeshHit hit;
+
+        NavMesh.SamplePosition(ranPos, out hit, roamDist, 1);
+        agent.SetDestination(hit.position);
+    }
+    void faceTarget()
+    {
+        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z));
+        transform.rotation = Quaternion.Lerp(transform.rotation, rot, faceTargetSpeed * Time.deltaTime);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (playerInTrigger&& canSeePlayer())
-        {
-            
-            
-        }
-        
-        
 
+
+        if (playerInTrigger && canSeePlayer())
+        {
+
+        }
+        else
+        {
+            checkRoam();
+        }
     }
+
     bool canSeePlayer()
     {
-        shootTimer = shootTimer + Time.deltaTime;
+        shootTimer += Time.deltaTime;
         playerDir = gameManager.instance.player.transform.position - transform.position;
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
-        Debug.DrawRay(transform.position, playerDir);
+
         RaycastHit hit;
+
         if (Physics.Raycast(transform.position, playerDir, out hit))
         {
-            if (angleToPlayer <= FOV&& hit.collider.CompareTag("Player"))
+            if (angleToPlayer <= FOV && hit.collider.CompareTag("Player"))
             {
-                
-               
+                agent.SetDestination(gameManager.instance.player.transform.position);
                 faceTarget();
                 rotateGun();
+
                 if (shootTimer >= shootRate)
                 {
                     shoot();
                 }
+                agent.stoppingDistance = stoppingDistOrig;
                 return true;
             }
-           
         }
+        agent.stoppingDistance = 0;
         return false;
     }
-    public void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             playerInTrigger = true;
         }
     }
-    public void OnTriggerExit(Collider other)
+
+    private void OnTriggerExit(Collider other)
     {
-        playerInTrigger = false;
+        if (other.CompareTag("Player"))
+        {
+            playerInTrigger = false;
+            agent.stoppingDistance = 0;
+        }
     }
-    void faceTarget()
-    {
-        Quaternion rot =Quaternion.LookRotation(new Vector3 (playerDir.x,0,playerDir.z));
-        transform.rotation = Quaternion.Lerp(transform.rotation, rot, faceTargetSpeed*Time.deltaTime);
-    }
-    void rotateGun()
+
+    public void rotateGun()
     {
         Quaternion rot = Quaternion.LookRotation(playerDir);
         gunPivot.rotation = Quaternion.Lerp(gunPivot.rotation, rot, gunRotateSpeed * Time.deltaTime);
@@ -96,8 +144,10 @@ public class enemy1AI : MonoBehaviour, IDamage
     {
         HP -= amount;
         agent.SetDestination(gameManager.instance.player.transform.position);
-        if (HP<=0)
+
+        if (HP <= 0)
         {
+
             Destroy(gameObject);
         }
         else
@@ -105,19 +155,18 @@ public class enemy1AI : MonoBehaviour, IDamage
             StartCoroutine(flashRed());
         }
     }
+
     IEnumerator flashRed()
     {
         model.material.color = Color.red;
-        yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(0.1f);
         model.material.color = colorOrig;
     }
+
     void shoot()
     {
         shootTimer = 0;
-       
         Instantiate(bullet, shootPos.position, transform.rotation);
-        
-       
-
     }
 }
+

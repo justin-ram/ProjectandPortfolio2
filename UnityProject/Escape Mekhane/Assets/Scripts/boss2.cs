@@ -151,8 +151,8 @@ public class boss2 : MonoBehaviour, IDamage
         HP -= amount;
         if (HP <= 0)
         {
-            
-            
+
+            Instantiate(shipItem, transform.position, transform.rotation);
             Destroy(gameObject);
         }
         else

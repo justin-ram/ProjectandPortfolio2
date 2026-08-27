@@ -91,6 +91,16 @@ public class boss3 : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
+        if (HP <= 0)
+        {
+
+
+            Destroy(gameObject);
+        }
+        else
+        {
+            StartCoroutine(flashRed());
+        }
         if (HP <= HPOrig / 3 * 2 && HP > HPOrig / 3)
         {
             if (spawnLevel != 2)
@@ -107,16 +117,7 @@ public class boss3 : MonoBehaviour, IDamage
                 spawnLevel = 3;
             }
         }
-        if (HP <= 0)
-        {
-            
-            
-            Destroy(gameObject);
-        }
-        else
-        {
-            StartCoroutine(flashRed());
-        }
+        
     }
     IEnumerator flashRed()
     {
@@ -126,6 +127,7 @@ public class boss3 : MonoBehaviour, IDamage
     }
     void callSpawn(int spawnLevel)
     {
+       
         if (spawnLevel == 0)
         {
 
@@ -156,7 +158,7 @@ public class boss3 : MonoBehaviour, IDamage
             spanwer2.spawn2 = true;
 
             spanwer2.spawn(1);
-            spawnTimer = 0;
+            
         }
         else if (spawnLevel == 3)
         {
@@ -175,7 +177,7 @@ public class boss3 : MonoBehaviour, IDamage
 
 
             spanwer4.spawn(1);
-            spawnTimer = 0;
+            
         }
         
 

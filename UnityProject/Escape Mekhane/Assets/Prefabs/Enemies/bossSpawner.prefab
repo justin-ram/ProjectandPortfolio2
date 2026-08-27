@@ -46,5 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectToSpawn: {fileID: 5208037341258555409, guid: a1a5eab29043a6c4dbb872b4d0dfecdb, type: 3}
   enemy2: {fileID: 8226244124773005046, guid: 25dbbdf3ca0b8c249b02e464a2fa06f2, type: 3}
-  spawnDist: 10
+  spawnDist: 8
   spawn2: 0

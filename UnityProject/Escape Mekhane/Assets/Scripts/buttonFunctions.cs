@@ -42,4 +42,10 @@ public class buttonFunctions : MonoBehaviour
     {
         SceneManager.LoadScene("Level2");
     }
+
+    public void respawnPlayer()
+    {
+        gameManager.instance.playerScript.spawnPlayer();
+        gameManager.instance.stateUnpause();
+    }
 }

@@ -56,7 +56,7 @@ MonoBehaviour:
   HP: 100
   speed: 6
   jumpSpeed: 10
-  maxJumps: 2
+  maxJumps: 1
   sprintMult: 2
   gravity: 15
   dashCoolDownTime: 3
@@ -95,6 +95,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c49157fd23134c6439b555bde1c9e767, type: 3}
   - {fileID: 8300000, guid: 2365386389509ad44b059b0e8e7cb73b, type: 3}
   audHurtVol: 0.5
+  grappleDistance: 100
+  grappleMoveDist: 0
+  grappleSpeed: 20
 --- !u!143 &2627892245434617466
 CharacterController:
   m_ObjectHideFlags: 0

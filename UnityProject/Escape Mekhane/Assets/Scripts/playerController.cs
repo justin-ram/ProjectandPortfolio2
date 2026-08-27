@@ -53,7 +53,6 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
     [Header("Grapple Things")]
     [SerializeField] int grappleDistance;
-    [SerializeField] float grappleMoveDist;
     [SerializeField] int grappleSpeed;
 
     Vector3 hitPosition;
@@ -69,7 +68,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     {
         HPOriginal = HP;
         gravityOrig = gravity;
-        updatePlayerUI();
+        spawnPlayer();
     }
 
     // Update is called once per frame
@@ -343,8 +342,6 @@ public class playerController : MonoBehaviour, IDamage, IPickup
                     gravity = 0;
                 }
             }
-
-
         }
         if (isGrappling)
         {
@@ -358,5 +355,12 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
     }
 
+    public void spawnPlayer()
+    {
+        controller.transform.position = gameManager.instance.playerSpawnPos.transform.position;
+        Physics.SyncTransforms();
+        HP = HPOriginal;
+        updatePlayerUI();
+    }
 
 }

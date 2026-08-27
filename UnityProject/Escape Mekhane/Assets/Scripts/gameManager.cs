@@ -29,6 +29,9 @@ public class gameManager : MonoBehaviour
     public TMP_Text shipPartsNeededTXT;
     public TMP_Text shipShipPartsCollectedTXT;
 
+    public GameObject playerSpawnPos;
+    public GameObject checkPointPopup;
+
     float timeScaleOrig;
     bool isPlayer;
     Dictionary<string, GameObject> menus;
@@ -41,6 +44,7 @@ public class gameManager : MonoBehaviour
     {
         instance = this;
         player = GameObject.FindWithTag("Player");
+        playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
 
         menus = new Dictionary<string, GameObject>();
         menus.Add("Credits", menuCredit);

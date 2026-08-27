@@ -365,6 +365,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
     public void teleportPlayer(Vector3 teleportPoint)
     {
+        
         controller.transform.position = teleportPoint;
         Physics.SyncTransforms();
     }

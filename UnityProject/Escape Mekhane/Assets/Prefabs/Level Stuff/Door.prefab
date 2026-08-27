@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4606627571620002798}
+  - component: {fileID: 2204390139164711922}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -33,6 +34,20 @@ Transform:
   - {fileID: 5750814427913938992}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2204390139164711922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4933480664354981717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b56ed3a686ac7a4a849f4ce4a3a9e13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointB: {fileID: 6011384954686874146}
+  movementSpeed: 10
 --- !u!1 &6011384954686874146
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,7 +73,7 @@ Transform:
   m_GameObject: {fileID: 6011384954686874146}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 10.5, z: 0}
+  m_LocalPosition: {x: 0, y: 1.09, z: -8.49}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
